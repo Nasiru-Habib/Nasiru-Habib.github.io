@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nasiru Habib Kayode | Data Engineer & Statistician</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0e1a; --bg2: #0f1526; --card: #131929;
+      --accent: #00d4aa; --accent2: #3b82f6; --gold: #f59e0b;
+      --text: #e8edf5; --muted: #8896b0; --border: rgba(255,255,255,0.07);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 6%; background: rgba(10,14,26,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--accent); }
+    .btn { padding: 0.85rem 2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.3s; display: inline-block; }
+    .btn-primary { background: var(--accent); color: #0a0e1a; }
+    .btn-primary:hover { background: #00f0c0; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,212,170,0.3); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 6% 4rem; position: relative; overflow: hidden; }
+    .hero-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,212,170,0.12) 0%, transparent 70%); top: -100px; right: -100px; border-radius: 50%; animation: pulse 6s ease-in-out infinite; }
+    .hero-glow2 { position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%); bottom: 0; left: -100px; border-radius: 50%; animation: pulse 8s ease-in-out infinite reverse; }
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.1);opacity:0.7} }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.25); color: var(--accent); font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 2rem; animation: fadeUp 0.8s ease both; }
+    .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: blink 1.5s ease infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; animation: fadeUp 0.8s 0.1s ease both; }
+    h1 span { color: var(--accent); }
+    .hero-sub { font-size: 1.1rem; color: var(--muted); margin: 1.5rem 0 2.5rem; max-width: 620px; font-weight: 300; animation: fadeUp 0.8s 0.2s ease both; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s 0.3s ease both; }
+    .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; flex-wrap: wrap; animation: fadeUp 0.8s 0.4s ease both; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+    /* SECTIONS */
+    section { padding: 6rem 6%; position: relative; z-index: 1; }
+    .section-label { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -1px; margin-bottom: 1rem; }
+    .section-desc { color: var(--muted); max-width: 540px; margin-bottom: 3.5rem; }
+
+    /* ABOUT */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start; }
+    .about-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
+    .about-card p { color: var(--muted); margin-bottom: 1rem; }
+    .about-card strong { color: var(--text); }
+    .skills-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+    .skill-tag { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.2); color: var(--accent); font-size: 0.78rem; padding: 0.3rem 0.85rem; border-radius: 100px; transition: all 0.3s; }
+    .skill-tag:hover { background: rgba(0,212,170,0.18); transform: translateY(-2px); }
+    .about-info { display: flex; flex-direction: column; gap: 1.2rem; }
+    .info-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1.2rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; transition: border-color 0.3s; }
+    .info-item:hover { border-color: rgba(0,212,170,0.3); }
+    .info-icon { width: 42px; height: 42px; border-radius: 10px; background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .info-text h4 { font-family: 'Syne',sans-serif; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .info-text p { color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+
+    /* EXPERIENCE */
+    #experience { background: var(--bg); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, var(--accent), var(--accent2), transparent); }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; padding-left: 1.5rem; }
+    .timeline-item::before { content: ''; position: absolute; left: -2.4rem; top: 0.4rem; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(0,212,170,0.5); }
+    .timeline-date { font-size: 0.78rem; color: var(--accent); letter-spacing: 1px; margin-bottom: 0.3rem; }
+    .timeline-role { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+    .timeline-org { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.75rem; }
+    .timeline-points { list-style: none; }
+    .timeline-points li { color: var(--muted); font-size: 0.85rem; padding: 0.25rem 0; padding-left: 1rem; position: relative; }
+    .timeline-points li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+    /* EDUCATION */
+    #education { background: var(--bg2); }
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; }
+    .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; }
+    .edu-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .edu-card:hover { transform: translateY(-4px); border-color: rgba(0,212,170,0.3); }
+    .edu-degree { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .edu-school { color: var(--accent); font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .edu-date { color: var(--muted); font-size: 0.78rem; margin-bottom: 0.75rem; }
+    .edu-grade { display: inline-block; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--gold); font-size: 0.75rem; padding: 0.2rem 0.7rem; border-radius: 100px; margin-bottom: 0.75rem; }
+    .edu-modules { color: var(--muted); font-size: 0.8rem; line-height: 1.6; }
+
+    /* PUBLICATIONS */
+    #publications { background: var(--bg); }
+    .pub-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .pub-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem; transition: all 0.3s; display: flex; gap: 1.5rem; align-items: flex-start; }
+    .pub-card:hover { border-color: rgba(59,130,246,0.4); transform: translateX(5px); }
+    .pub-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: rgba(0,212,170,0.15); flex-shrink: 0; line-height: 1; }
+    .pub-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; line-height: 1.4; }
+    .pub-journal { color: var(--accent2); font-size: 0.8rem; margin-bottom: 0.3rem; }
+    .pub-authors { color: var(--muted); font-size: 0.78rem; }
+
+    /* PROJECTS */
+    #projects { background: var(--bg2); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; }
+    .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; }
+    .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transform: scaleX(0); transition: transform 0.3s; }
+    .project-card:hover { transform: translateY(-5px); border-color: rgba(0,212,170,0.3); }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-badge { display: inline-block; font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 100px; margin-bottom: 1.2rem; }
+    .badge-soon { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.25); }
+    .badge-live { background: rgba(0,212,170,0.1); color: var(--accent); border: 1px solid rgba(0,212,170,0.25); }
+    .project-card h3 { font-family: 'Syne',sans-serif; font-size: 1.05rem; margin-bottom: 0.7rem; }
+    .project-card p { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .project-tag { font-size: 0.73rem; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 0.2rem 0.65rem; border-radius: 6px; }
+
+    /* BLOG */
+    #blog { background: var(--bg); }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px,1fr)); gap: 1.5rem; }
+    .blog-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; transition: all 0.3s; }
+    .blog-card:hover { transform: translateY(-4px); border-color: rgba(59,130,246,0.3); }
+    .blog-date { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .blog-card h3 { font-family: 'Syne',sans-serif; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+    .blog-card p { color: var(--muted); font-size: 0.83rem; }
+    .blog-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent2); font-size: 0.82rem; text-decoration: none; margin-top: 1rem; transition: gap 0.3s; }
+    .blog-link:hover { gap: 0.7rem; }
+
+    /* CONTACT */
+    #contact { background: var(--bg2); }
+    .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.5rem; }
+    .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--text); transition: all 0.3s; font-size: 0.85rem; }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateX(5px); }
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group label { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+    .form-group input, .form-group textarea { background: var(--card); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 0.85rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; transition: border-color 0.3s; outline: none; resize: vertical; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { min-height: 130px; }
+    .btn-submit { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 1rem 2rem; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.3s; }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,212,170,0.25); }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 2.5rem 6%; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.82rem; }
+    footer span { color: var(--accent); }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+    @media (max-width: 768px) {
+      .about-grid, .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      .hero-stats { gap: 2rem; }
+      h1 { letter-spacing: -1px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">NHK.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:habibkayode53@gmail.com" class="btn btn-primary" style="padding:0.55rem 1.4rem;font-size:0.85rem;">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Open to opportunities &amp; collaborations</div>
+    <h1>Nasiru Habib<br/><span>Kayode.</span></h1>
+    <p class="hero-sub">
+      MSc Statistics candidate (University of Ibadan) · First-Class BSc Statistics graduate · Data Analyst, Researcher & Aspiring Data Engineer — with 3 peer-reviewed publications and a passion for turning complex data into decisions that matter.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#publications" class="btn btn-outline">See Publications</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">1st</div>
+        <div class="stat-label">Class Honours · 4.61/5.00</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Peer-Reviewed Publications</div>
+      </div>
+      <div>
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years of Analytical Work</div>
+      </div>
+      <div>
+        <div class="stat-num">MSc</div>
+        <div class="stat-label">Statistics · UI Ibadan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-card">
+      <p class="section-label">About Me</p>
+      <h2 style="margin-bottom:1.2rem;">Statistician. Analyst.<br/>Data Engineer in progress.</h2>
+      <p>I'm a <strong>First-Class Statistics graduate (4.61/5.00)</strong> from the University of Abuja and currently completing my <strong>MSc in Statistics at the University of Ibadan</strong> — one of Africa's most prestigious research institutions.</p>
+      <p>My expertise spans <strong>statistical modelling, machine learning, data analysis, and research</strong>. I have hands-on experience using SPSS, R, Python, EViews, and Excel across academic, corporate, and consultancy settings — and I'm now expanding into <strong>SQL and data engineering</strong> to build end-to-end data pipelines.</p>
+      <p>I've co-authored <strong>3 peer-reviewed journal publications</strong>, led data analysis projects at Excellent Analytical Consult, and supported numerous research and corporate clients through DDON Consult.</p>
+      <div class="skills-list">
+        <span class="skill-tag">SQL (Learning)</span>
+        <span class="skill-tag">R / RStudio</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">SPSS</span>
+        <span class="skill-tag">EViews</span>
+        <span class="skill-tag">Minitab</span>
+        <span class="skill-tag">Excel</span>
+        <span class="skill-tag">Regression Analysis</span>
+        <span class="skill-tag">Hypothesis Testing</span>
+        <span class="skill-tag">Machine Learning</span>
+        <span class="skill-tag">Data Visualization</span>
+        <span class="skill-tag">Time Series</span>
+        <span class="skill-tag">SVM / KNN / Naïve Bayes</span>
+        <span class="skill-tag">Photoshop</span>
+      </div>
+    </div>
+    <div class="about-info">
+      <div class="info-item">
+        <div class="info-icon">🎓</div>
+        <div class="info-text">
+          <h4>MSc Statistics</h4>
+          <p>University of Ibadan, Nigeria · 2024–2026<br/>Distribution Theory, Survival Analysis, Statistical Genetics & more</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🏅</div>
+        <div class="info-text">
+          <h4>First-Class BSc Statistics</h4>
+          <p>University of Abuja · 4.61/5.00 CGPA<br/>Graduated 2020</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div class="info-text">
+          <h4>Location</h4>
+          <p>Abuja, FCT, Nigeria<br/>Open to remote & international opportunities</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div class="info-text">
+          <h4>Contact</h4>
+          <p>+234 814 314 0315<br/>habibkayode53@gmail.com</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🌐</div>
+        <div class="info-text">
+          <h4>Languages</h4>
+          <p>English (Fluent) · Yoruba (Native) · Hausa (Basic)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Career</p>
+  <h2>Work Experience</h2>
+  <p class="section-desc">A track record across data analysis, research, consulting, banking, and operations.</p>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-date">MAY 2025 – PRESENT</div>
+      <div class="timeline-role">Data Analyst & Research Assistant</div>
+      <div class="timeline-org">Excellent Analytical Consult</div>
+      <ul class="timeline-points">
+        <li>Leading data analysis projects for corporate and academic clients</li>
+        <li>Providing project and research assistance across multiple sectors</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">MAR 2023 – DEC 2024</div>
+      <div class="timeline-role">POS Operations & Digital Payments Specialist</div>
+      <div class="timeline-org">Ede Okula Oil and Gas Nig Ltd</div>
+      <ul class="timeline-points">
+        <li>Deployed and managed POS payment solutions, improving transaction efficiency</li>
+        <li>Trained station staff on digital payment systems and provided ongoing technical support</li>
+        <li>Monitored transaction performance and resolved payment/network issues</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">OCT 2022 – DEC 2024</div>
+      <div class="timeline-role">Business Relationship Manager</div>
+      <div class="timeline-org">Moniepoint Microfinance Bank</div>
+      <ul class="timeline-points">
+        <li>Managed and maintained strong relationships with business clients</li>
+        <li>Drove sales of banking products to meet business growth targets</li>
+        <li>Monitored customer accounts, credit performance, and loan repayments</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">MAR 2021 – 2024</div>
+      <div class="timeline-role">Manager / Photographer / Photo Editor</div>
+      <div class="timeline-org">Alasco Executive Studio, Katsina</div>
+      <ul class="timeline-points">
+        <li>Oversaw studio operations, ensuring smooth workflow and client satisfaction</li>
+        <li>Provided professional photography and post-production editing services</li>
+        <li>Conducted training sessions on photography and photo editing</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">MAR 2020 – 2023</div>
+      <div class="timeline-role">Statistical Analyst & Research Consultant</div>
+      <div class="timeline-org">DDON Consult</div>
+      <ul class="timeline-points">
+        <li>Conducted statistical analyses for various academic and corporate research projects</li>
+        <li>Assisted clients in structuring and analyzing large datasets for decision-making</li>
+        <li>Provided research support for academic and corporate projects</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">MAR 2020 – FEB 2021</div>
+      <div class="timeline-role">Mathematics Teacher</div>
+      <div class="timeline-org">Government Day Secondary School, Danturai, Zamfara</div>
+      <ul class="timeline-points">
+        <li>Taught senior secondary school mathematics and evaluated student performance</li>
+        <li>Developed lesson plans aligned with national curriculum standards</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">OCT 2018 – JAN 2019</div>
+      <div class="timeline-role">SIWES Intern</div>
+      <div class="timeline-org">University of Abuja Teaching Hospital</div>
+      <ul class="timeline-points">
+        <li>Recorded and processed patient data, ensuring accuracy and confidentiality</li>
+        <li>Assisted in monitoring and evaluation of hospital records</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <p class="section-label">Academic Background</p>
+  <h2>Education & Certifications</h2>
+  <p class="section-desc">A strong foundation in statistics, machine learning, and data science.</p>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-degree">MSc Statistics</div>
+      <div class="edu-school">University of Ibadan, Nigeria</div>
+      <div class="edu-date">July 2024 – January 2026</div>
+      <div class="edu-modules">Distribution Theory · Linear Methods · Statistical Bioassay · Advanced Demography · Probabilistic Graphical Models · Statistical Inference · Statistical Computing · Statistical Genetics · Non-Parametric Methods · Survival Analysis · Probability Theory</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">BSc Statistics</div>
+      <div class="edu-school">University of Abuja, Nigeria</div>
+      <div class="edu-date">November 2015 – February 2020</div>
+      <div class="edu-grade">First Class · 4.61/5.00</div>
+      <div class="edu-modules">Probability Theory · Regression & Correlation · Hypothesis Testing · ANOVA · Sampling Theory · Decision Theory · Multivariate Analysis · Time Series · Stochastic Process · Operations Research</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Diploma in Machine Learning with RStudio</div>
+      <div class="edu-school">Start-Tech Academy</div>
+      <div class="edu-date">2022</div>
+      <div class="edu-modules">Machine Learning basics · Data Preprocessing · Linear Regression · LDA · KNN · SVM in R</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Foundation PG Course – Big Data Analytics</div>
+      <div class="edu-school">Virtual (Postgraduate)</div>
+      <div class="edu-date">2021</div>
+      <div class="edu-modules">Data Visualization · SVM · KNN · Naïve Bayes · Cluster Analysis</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Python Development & Data Science</div>
+      <div class="edu-school">Online Certification</div>
+      <div class="edu-date">2025</div>
+      <div class="edu-modules">Python fundamentals · Variables & Data Types · Hypothesis Testing in Python</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Statistics: Effectively Displaying Data</div>
+      <div class="edu-school">Online Certification</div>
+      <div class="edu-date">2025</div>
+      <div class="edu-modules">Data Visualization principles · Data Types · Elements of good graphs</div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <p class="section-label">Research</p>
+  <h2>Peer-Reviewed Publications</h2>
+  <p class="section-desc">Contributing to statistical knowledge in public health, epidemiology, and maternal health.</p>
+  <div class="pub-list">
+    <div class="pub-card">
+      <div class="pub-num">01</div>
+      <div>
+        <div class="pub-title">A Product Binomial Modelling of Advanced Maternal Age on Pregnancy Outcome</div>
+        <div class="pub-journal">Global Scientific Journal · Vol. 10, Issue 2, 2022 · pp. 2340–2358</div>
+        <div class="pub-authors">Oguntade E., Oladimeji M., Olarenwaju S., <strong>Nasiru H.</strong> · Also presented at: The Role of Mathematical Science in Sustainable Development Goals (2020)</div>
+      </div>
+    </div>
+    <div class="pub-card">
+      <div class="pub-num">02</div>
+      <div>
+        <div class="pub-title">Knowledge and Attitude of Female Genital Mutilation Among Mothers Living in Afao Community, Ekiti State</div>
+        <div class="pub-journal">Journal of Advanced Education and Sciences · 2022; 2(4): 116–123</div>
+        <div class="pub-authors">Akinola F., Ogunlade T., <strong>Nasiru H.</strong>, Nasiru M.</div>
+      </div>
+    </div>
+    <div class="pub-card">
+      <div class="pub-num">03</div>
+      <div>
+        <div class="pub-title">Perception and Practice of Injection Safety Among Nurses in Federal Teaching Hospital, Ido-Ekiti</div>
+        <div class="pub-journal">Journal of Advanced Education and Sciences · 2023; 3(1): 82–88</div>
+        <div class="pub-authors">Osundare I., Akinola F., <strong>Nasiru H.</strong>, Jonathan F.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Portfolio</p>
+  <h2>Data Projects</h2>
+  <p class="section-desc">Hands-on projects being built as I advance through SQL and data engineering — watch this space grow.</p>
+  <div class="projects-grid">
+    <div class="project-card">
+      <span class="project-badge badge-soon">In Progress</span>
+      <h3>Sales Data Analysis with SQL</h3>
+      <p>Querying and analyzing a retail sales database to uncover trends, top-performing products, and regional patterns using advanced SQL techniques.</p>
+      <div class="project-tags">
+        <span class="project-tag">SQL</span>
+        <span class="project-tag">Data Analysis</span>
+        <span class="project-tag">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <span class="project-badge badge-soon">Coming Soon</span>
+      <h3>Maternal Age & Pregnancy Outcome Model</h3>
+      <p>Extending my published research into an interactive data visualization — showing the product binomial model applied to real hospital data.</p>
+      <div class="project-tags">
+        <span class="project-tag">R</span>
+        <span class="project-tag">Statistics</span>
+        <span class="project-tag">Data Viz</span>
+        <span class="project-tag">Research</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <span class="project-badge badge-soon">Coming Soon</span>
+      <h3>Student Performance Dashboard</h3>
+      <p>Statistical analysis of academic performance data — identifying key factors affecting outcomes using regression, ANOVA, and visualization.</p>
+      <div class="project-tags">
+        <span class="project-tag">SPSS</span>
+        <span class="project-tag">Excel</span>
+        <span class="project-tag">Statistics</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <span class="project-badge badge-soon">Coming Soon</span>
+      <h3>Time Series Forecasting — Nigerian Economic Data</h3>
+      <p>Applying time series analysis techniques learned during my MSc to real Nigerian economic indicators, with R and EViews.</p>
+      <div class="project-tags">
+        <span class="project-tag">EViews</span>
+        <span class="project-tag">R</span>
+        <span class="project-tag">Time Series</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <p class="section-label">Writing</p>
+  <h2>Learning in Public</h2>
+  <p class="section-desc">Lessons, reflections and guides from my journey — bridging academic statistics with real-world data engineering.</p>
+  <div class="blog-grid">
+    <div class="blog-card">
+      <div class="blog-date">May 2025 · Coming Soon</div>
+      <h3>From First-Class Stats Grad to Aspiring Data Engineer — My Roadmap</h3>
+      <p>How a strong statistics foundation accelerates the path into data engineering, and what still needs to be learned.</p>
+      <a href="#" class="blog-link">Coming soon →</a>
+    </div>
+    <div class="blog-card">
+      <div class="blog-date">Coming Soon</div>
+      <h3>SQL for Statisticians — What's Familiar and What's New</h3>
+      <p>A statistician's perspective on learning SQL: where R and SPSS thinking transfers, and where you need to think differently.</p>
+      <a href="#" class="blog-link">Coming soon →</a>
+    </div>
+    <div class="blog-card">
+      <div class="blog-date">Coming Soon</div>
+      <h3>How to Publish Research as a Student — Lessons from 3 Papers</h3>
+      <p>Practical lessons from co-authoring three peer-reviewed papers before finishing my undergraduate degree.</p>
+      <a href="#" class="blog-link">Coming soon →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrapper">
+    <div>
+      <p class="section-label">Get In Touch</p>
+      <h2>Let's work together</h2>
+      <p style="color:var(--muted);margin-bottom:0.5rem;">Whether it's a data project, research collaboration, consultancy, or just a conversation about statistics and data — reach out.</p>
+      <div class="contact-links">
+        <a href="mailto:habibkayode53@gmail.com" class="contact-link">✉️ &nbsp; habibkayode53@gmail.com</a>
+        <a href="tel:+2348143140315" class="contact-link">📞 &nbsp; +234 814 314 0315</a>
+        <a href="https://www.linkedin.com/in/habib-nasiru-a616351b7" class="contact-link" target="_blank">💼 &nbsp; LinkedIn — Habib Nasiru</a>
+        <a href="https://github.com/Nasiru-Habib" class="contact-link" target="_blank">🐙 &nbsp; GitHub — Nasiru-Habib</a>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="e.g. John Adamu" required />
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="john@example.com" required />
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell me about your project, opportunity, or collaboration idea..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>Nasiru Habib Kayode</span> · Statistician · Data Analyst · Aspiring Data Engineer · Abuja, Nigeria</p>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.textContent = '✓ Message Sent!';
+    btn.style.background = 'linear-gradient(135deg,#00d4aa,#00d4aa)';
+    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.project-card,.blog-card,.edu-card,.pub-card,.timeline-item,.info-item').forEach(el => {
+    el.style.opacity='0'; el.style.transform='translateY(22px)';
+    el.style.transition='opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
