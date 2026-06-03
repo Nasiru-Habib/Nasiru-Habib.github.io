@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nasiru Habib Kayode — Data Analyst & Statistician</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #0a0e1a;
+  --bg2: #0d1226;
+  --surface: #111827;
+  --surface2: #1a2235;
+  --accent: #64ffda;
+  --accent2: #7b61ff;
+  --accent3: #ff6b6b;
+  --text: #ccd6f6;
+  --text-dim: #8892b0;
+  --text-bright: #e6f1ff;
+  --border: rgba(100,255,218,0.12);
+  --glow: rgba(100,255,218,0.15);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ── CANVAS BG ── */
+#bg-canvas {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none; opacity: 0.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5vw; height: 68px;
+  background: rgba(10,14,26,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--serif); font-size: 1.3rem; font-weight: 900;
+  color: var(--accent); text-decoration: none; letter-spacing: -0.5px;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.8rem; font-weight: 500; color: var(--text-dim);
+  text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-links a::before { content: '0' counter(nav-item) '. '; counter-increment: nav-item; color: var(--accent); font-size: 0.7rem; }
+.nav-links { counter-reset: nav-item; }
+.nav-cta {
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid var(--accent);
+  padding: 0.5rem 1.2rem; border-radius: 4px; text-decoration: none;
+  transition: all 0.2s;
+}
+.nav-cta:hover { background: rgba(100,255,218,0.1); box-shadow: 0 0 20px rgba(100,255,218,0.2); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  padding-top: 68px; position: relative; z-index: 1;
+}
+.hero-text {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 6vw 4vw 6vw 8vw;
+}
+.hero-eyebrow {
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.hero-eyebrow::after {
+  content: ''; display: block; width: 60px; height: 1px; background: var(--accent); opacity: 0.5;
+}
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 900; line-height: 1.05; letter-spacing: -2px;
+  color: var(--text-bright); margin-bottom: 1.5rem;
+}
+.hero-name .highlight {
+  color: var(--accent);
+  text-shadow: 0 0 30px rgba(100,255,218,0.4);
+}
+.hero-bio {
+  font-size: 1rem; color: var(--text-dim); max-width: 480px;
+  margin-bottom: 2.5rem; font-weight: 300; line-height: 1.8;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-block; padding: 0.8rem 2rem;
+  background: transparent; color: var(--accent);
+  border: 1px solid var(--accent); border-radius: 4px;
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; transition: all 0.25s; position: relative; overflow: hidden;
+}
+.btn-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--accent); opacity: 0; transition: opacity 0.25s; z-index: -1;
+}
+.btn-primary:hover { color: var(--bg); }
+.btn-primary:hover::before { opacity: 1; }
+.btn-ghost {
+  display: inline-block; padding: 0.8rem 2rem;
+  color: var(--text-dim); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em;
+  text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.2s;
+}
+.btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+.hero-right {
+  display: flex; align-items: center; justify-content: center;
+  padding: 4vw; position: relative;
+}
+.stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  width: 100%; max-width: 400px;
+}
+.stat-card {
+  padding: 1.8rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.stat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  opacity: 0; transition: opacity 0.3s;
+}
+.stat-card:hover::before { opacity: 1; }
+.stat-num {
+  font-family: var(--serif); font-size: 2.5rem; font-weight: 900;
+  color: var(--accent); line-height: 1; margin-bottom: 0.5rem;
+}
+.stat-num sup { font-size: 1rem; }
+.stat-label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.4; }
+
+/* ── SECTION COMMONS ── */
+section { padding: 7rem 8vw; position: relative; z-index: 1; }
+.section-header { margin-bottom: 4rem; }
+.section-tag {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1rem;
+}
+.section-tag::before {
+  content: attr(data-num); color: var(--accent); font-family: var(--serif); font-size: 0.85rem;
+}
+.section-tag::after { content: ''; display: block; width: 60px; height: 1px; background: var(--accent); opacity: 0.4; }
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 900; letter-spacing: -0.5px; line-height: 1.1;
+  color: var(--text-bright); margin-bottom: 1rem;
+}
+.section-lead { font-size: 0.95rem; color: var(--text-dim); max-width: 540px; font-weight: 300; }
+.divider { width: 100%; height: 1px; background: var(--border); margin: 0; }
+
+/* ── ABOUT ── */
+#about { background: var(--bg); }
+.about-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 5vw; align-items: start; }
+.about-body p { color: var(--text-dim); margin-bottom: 1.25rem; font-size: 0.95rem; line-height: 1.85; }
+.about-body p strong { color: var(--text); font-weight: 600; }
+.skills-wrap { margin-top: 2.5rem; }
+.skills-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1rem; color: var(--text); }
+.skills-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-tag {
+  display: inline-block; padding: 0.3rem 0.85rem;
+  background: transparent; border: 1px solid var(--border);
+  font-size: 0.75rem; font-weight: 500; border-radius: 4px;
+  color: var(--accent); font-family: var(--sans);
+  transition: border-color 0.2s, background 0.2s;
+}
+.skill-tag:hover { border-color: var(--accent); background: rgba(100,255,218,0.06); }
+
+.about-sidebar { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.info-row {
+  padding: 1.25rem 1.5rem; background: var(--surface);
+  transition: background 0.2s;
+}
+.info-row:hover { background: var(--surface2); }
+.info-row-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 0.3rem; }
+.info-row-value { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+.info-row-sub { font-size: 0.78rem; color: var(--text-dim); margin-top: 0.15rem; }
+
+/* ── EXPERIENCE ── */
+#experience { background: var(--bg2); }
+.timeline { display: flex; flex-direction: column; }
+.tl-item {
+  display: grid; grid-template-columns: 180px 1px 1fr;
+  gap: 0 2.5rem; padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.tl-item:first-child { border-top: 1px solid var(--border); }
+.tl-date { font-size: 0.75rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; padding-top: 0.4rem; text-align: right; line-height: 1.5; }
+.tl-line { width: 1px; background: var(--border); position: relative; }
+.tl-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--bg2);
+  position: absolute; left: 50%; top: 0.35rem;
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px rgba(100,255,218,0.5);
+}
+.tl-body { padding-top: 0.2rem; }
+.tl-role { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.25rem; }
+.tl-org { font-size: 0.82rem; font-weight: 600; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.04em; }
+.tl-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; list-style: none; }
+.tl-desc li { padding-left: 1.2rem; position: relative; margin-bottom: 0.35rem; }
+.tl-desc li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; top: 0.15rem; }
+
+/* ── EDUCATION ── */
+#education { background: var(--bg); }
+.edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+.edu-card {
+  padding: 1.8rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  position: relative; overflow: hidden;
+}
+.edu-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+}
+.edu-card:hover { border-color: rgba(100,255,218,0.3); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+.edu-card:hover::after { transform: scaleX(1); }
+.edu-degree { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.3rem; }
+.edu-inst { font-size: 0.8rem; font-weight: 600; color: var(--accent); margin-bottom: 0.2rem; letter-spacing: 0.03em; }
+.edu-year { font-size: 0.72rem; color: var(--text-dim); margin-bottom: 0.8rem; }
+.edu-badge {
+  display: inline-block; padding: 0.2rem 0.7rem;
+  background: rgba(100,255,218,0.1); color: var(--accent);
+  font-size: 0.68rem; font-weight: 700; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid rgba(100,255,218,0.3);
+  margin-bottom: 0.8rem;
+}
+.edu-courses { font-size: 0.78rem; color: var(--text-dim); margin-top: 0.8rem; line-height: 1.7; }
+
+/* ── PUBLICATIONS ── */
+#publications { background: var(--bg2); }
+.pub-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.pub-item {
+  display: grid; grid-template-columns: 56px 1fr;
+  gap: 2rem; padding: 1.8rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  cursor: default;
+}
+.pub-item:hover { border-color: rgba(100,255,218,0.35); box-shadow: 0 4px 30px rgba(0,0,0,0.25); }
+.pub-num {
+  font-family: var(--serif); font-size: 2.2rem; font-weight: 900;
+  color: rgba(100,255,218,0.15); line-height: 1; padding-top: 0.1rem;
+  transition: color 0.25s;
+}
+.pub-item:hover .pub-num { color: rgba(100,255,218,0.4); }
+.pub-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.5rem; line-height: 1.45; }
+.pub-journal { font-size: 0.78rem; font-weight: 600; color: var(--accent); margin-bottom: 0.4rem; letter-spacing: 0.03em; }
+.pub-authors { font-size: 0.78rem; color: var(--text-dim); line-height: 1.6; }
+.pub-authors strong { color: var(--text); }
+
+/* ── PROJECTS ── */
+#projects { background: var(--bg); }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+.project-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 2rem; display: flex; flex-direction: column;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  position: relative; overflow: hidden;
+}
+.project-card:hover { transform: translateY(-5px); border-color: rgba(100,255,218,0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+.project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; }
+.project-icon { font-size: 1.8rem; }
+.project-status {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.25rem 0.65rem; border-radius: 100px;
+}
+.status-progress { background: rgba(255,214,0,0.12); color: #ffd600; border: 1px solid rgba(255,214,0,0.25); }
+.status-soon { background: rgba(123,97,255,0.12); color: var(--accent2); border: 1px solid rgba(123,97,255,0.25); }
+.project-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.75rem; }
+.project-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.75; flex: 1; margin-bottom: 1.5rem; }
+.project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ptag {
+  font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.6rem;
+  background: rgba(100,255,218,0.06); border: 1px solid rgba(100,255,218,0.2);
+  border-radius: 3px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.07em; font-family: var(--sans);
+}
+
+/* ── CONTACT ── */
+#contact { background: var(--bg2); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; align-items: start; }
+.contact-intro { font-size: 0.95rem; color: var(--text-dim); line-height: 1.85; font-weight: 300; margin-bottom: 2.5rem; }
+.contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.contact-link {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); text-decoration: none; font-size: 0.88rem; font-weight: 500;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.contact-link:hover { border-color: var(--accent); background: rgba(100,255,218,0.05); color: var(--accent); }
+.contact-icon { font-size: 1rem; min-width: 1.2rem; }
+.form-col { display: flex; flex-direction: column; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-dim); }
+.form-group input, .form-group textarea {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 0.8rem 1rem;
+  font-size: 0.88rem; color: var(--text); font-family: var(--sans); outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(100,255,218,0.08);
+}
+.form-group textarea { resize: vertical; min-height: 130px; }
+.btn-send {
+  align-self: flex-start; padding: 0.85rem 2.2rem;
+  background: transparent; color: var(--accent);
+  border: 1px solid var(--accent); border-radius: 4px;
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; font-family: var(--sans);
+  transition: all 0.25s; position: relative; overflow: hidden; z-index: 0;
+}
+.btn-send::before {
+  content: ''; position: absolute; inset: 0; background: var(--accent);
+  opacity: 0; transition: opacity 0.25s; z-index: -1;
+}
+.btn-send:hover { color: var(--bg); }
+.btn-send:hover::before { opacity: 1; }
+
+/* ── FOOTER ── */
+footer {
+  background: #050810; color: var(--text-dim);
+  text-align: center; padding: 2rem 2rem 2.5rem;
+  font-size: 0.78rem; letter-spacing: 0.05em; border-top: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+footer span { color: var(--accent); }
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+/* ── CURSOR GLOW ── */
+.cursor-glow {
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(100,255,218,0.06) 0%, transparent 70%);
+  position: fixed; pointer-events: none; z-index: 0;
+  transform: translate(-50%, -50%);
+  transition: left 0.15s, top 0.15s;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  #hero { grid-template-columns: 1fr; }
+  .hero-text { padding: 8vw 6vw 4vw; }
+  .hero-right { padding: 4vw 6vw 6vw; }
+  .stats-grid { max-width: 100%; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .tl-item { grid-template-columns: 1fr; gap: 0.4rem; }
+  .tl-date { text-align: left; }
+  .tl-line { display: none; }
+  .nav-links { display: none; }
+  section { padding: 5rem 6vw; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="cursor-glow" id="cursor-glow"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">NHK.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#publications">Research</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="mailto:habibkayode53@gmail.com">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow reveal">Data Analyst · Statistician · Researcher</p>
+    <h1 class="hero-name reveal" style="animation-delay:0.15s">
+      Nasiru<br/><span class="highlight">Habib</span><br/>Kayode.
+    </h1>
+    <p class="hero-bio reveal" style="animation-delay:0.3s">
+      First-Class Statistics graduate · MSc candidate at the University of Ibadan · 
+      3 peer-reviewed publications · Building toward data engineering to turn 
+      complex data into decisions that matter.
+    </p>
+    <div class="hero-actions reveal" style="animation-delay:0.45s">
+      <a class="btn-primary" href="#projects">View Projects</a>
+      <a class="btn-ghost" href="#publications">See Research →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <div class="stat-num">4.61<sup>/5</sup></div>
+        <div class="stat-label">First-Class CGPA</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Peer-Reviewed Papers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5<sup>+</sup></div>
+        <div class="stat-label">Years Analytical Work</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">MSc</div>
+        <div class="stat-label">Statistics · Univ. of Ibadan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <div class="section-tag" data-num="01">Who I Am</div>
+    <h2 class="section-title">Statistician. Analyst.<br/>Data Engineer in progress.</h2>
+    <p class="section-lead">A rigorous blend of academic excellence and real-world analytical practice.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-body reveal-left">
+      <p>
+        I'm a statistician and data analyst with a <strong>First-Class BSc (4.61/5.00)</strong> from the University of Abuja, 
+        currently completing my <strong>MSc in Statistics at the University of Ibadan</strong> — one of Africa's foremost 
+        research institutions.
+      </p>
+      <p>
+        My expertise spans <strong>statistical modelling, machine learning, research methodology, and data analysis</strong>. 
+        I've applied these skills across academic, corporate, and consultancy settings using R, Python, 
+        SPSS, EViews, and Excel. I'm now expanding into SQL and data engineering to build end-to-end pipelines.
+      </p>
+      <p>
+        I've co-authored <strong>3 peer-reviewed journal publications</strong> in public health and epidemiology, 
+        and actively take on research and data projects for academic and corporate clients.
+      </p>
+      <div class="skills-wrap">
+        <div class="skills-label">Technical Stack</div>
+        <div class="skills-list">
+          <span class="skill-tag">R / RStudio</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SPSS</span>
+          <span class="skill-tag">SQL (Learning)</span>
+          <span class="skill-tag">EViews</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Regression Analysis</span>
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Time Series</span>
+          <span class="skill-tag">Data Visualization</span>
+          <span class="skill-tag">Hypothesis Testing</span>
+          <span class="skill-tag">SVM / KNN / Naïve Bayes</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-sidebar reveal">
+      <div class="info-row">
+        <div class="info-row-label">Current Role</div>
+        <div class="info-row-value">Data Analyst & Research Assistant</div>
+        <div class="info-row-sub">Excellent Analytical Consult · May 2025–Present</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-label">Academic</div>
+        <div class="info-row-value">MSc Statistics Candidate</div>
+        <div class="info-row-sub">University of Ibadan · 2024–2026</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-label">Location</div>
+        <div class="info-row-value">Abuja, FCT, Nigeria</div>
+        <div class="info-row-sub">Open to remote & international opportunities</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-label">Languages</div>
+        <div class="info-row-value">English (Fluent) · Yoruba (Native)</div>
+        <div class="info-row-sub">Hausa (Basic)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <div class="section-tag" data-num="02">Career</div>
+    <h2 class="section-title">Work Experience</h2>
+    <p class="section-lead">A focused track record in data analysis, statistical consulting, and client-facing roles.</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-date">May 2025<br/>Present</div>
+      <div class="tl-line"><div class="tl-dot"></div></div>
+      <div class="tl-body">
+        <div class="tl-role">Data Analyst & Research Assistant</div>
+        <div class="tl-org">Excellent Analytical Consult</div>
+        <ul class="tl-desc">
+          <li>Lead data analysis projects for corporate and academic clients across multiple sectors.</li>
+          <li>Provide quantitative research support, statistical modelling, and interpretation of findings.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-date">Mar 2020<br/>2023</div>
+      <div class="tl-line"><div class="tl-dot"></div></div>
+      <div class="tl-body">
+        <div class="tl-role">Statistical Analyst & Research Consultant</div>
+        <div class="tl-org">DDON Consult</div>
+        <ul class="tl-desc">
+          <li>Conducted statistical analyses for academic and corporate research projects.</li>
+          <li>Assisted clients in structuring and analysing large datasets for evidence-based decision-making.</li>
+          <li>Delivered research support across disciplines including health, education, and business.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-date">Oct 2022<br/>Dec 2024</div>
+      <div class="tl-line"><div class="tl-dot"></div></div>
+      <div class="tl-body">
+        <div class="tl-role">Business Relationship Manager</div>
+        <div class="tl-org">Moniepoint Microfinance Bank</div>
+        <ul class="tl-desc">
+          <li>Managed client portfolios and built strong relationships with business customers.</li>
+          <li>Monitored account performance, credit metrics, and loan repayment trends using data-driven insights.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <div class="section-tag" data-num="03">Academic Background</div>
+    <h2 class="section-title">Education &<br/>Certifications</h2>
+    <p class="section-lead">A rigorous foundation in statistics, machine learning, and data science.</p>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-degree">MSc Statistics</div>
+      <div class="edu-inst">University of Ibadan, Nigeria</div>
+      <div class="edu-year">July 2024 – January 2026</div>
+      <div class="edu-courses">Distribution Theory · Survival Analysis · Statistical Genetics · Probabilistic Graphical Models · Statistical Computing · Non-Parametric Methods · Advanced Demography · Statistical Inference</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">BSc Statistics</div>
+      <div class="edu-inst">University of Abuja, Nigeria</div>
+      <div class="edu-year">Nov 2015 – Feb 2020</div>
+      <div class="edu-badge">First Class · 4.61 / 5.00</div>
+      <div class="edu-courses">Regression · Hypothesis Testing · ANOVA · Multivariate Analysis · Time Series · Stochastic Processes · Operations Research</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">Diploma in ML with RStudio</div>
+      <div class="edu-inst">Start-Tech Academy</div>
+      <div class="edu-year">2022</div>
+      <div class="edu-courses">Data Preprocessing · Linear Regression · LDA · KNN · SVM in R</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">Big Data Analytics (Foundation PG)</div>
+      <div class="edu-inst">Virtual Postgraduate Programme</div>
+      <div class="edu-year">2021</div>
+      <div class="edu-courses">Data Visualization · SVM · KNN · Naïve Bayes · Cluster Analysis</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">Python Development & Data Science</div>
+      <div class="edu-inst">Online Certification</div>
+      <div class="edu-year">2025</div>
+      <div class="edu-courses">Python Fundamentals · Variables & Data Types · Hypothesis Testing in Python</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-header reveal">
+    <div class="section-tag" data-num="04">Research</div>
+    <h2 class="section-title">Peer-Reviewed<br/>Publications</h2>
+    <p class="section-lead">Contributing to statistical knowledge in public health, epidemiology, and maternal health.</p>
+  </div>
+  <div class="pub-list">
+    <div class="pub-item reveal">
+      <div class="pub-num">01</div>
+      <div>
+        <div class="pub-title">A Product Binomial Modelling of Advanced Maternal Age on Pregnancy Outcome</div>
+        <div class="pub-journal">Global Scientific Journal · Vol. 10, Issue 2, 2022 · pp. 2340–2358</div>
+        <div class="pub-authors">Oguntade E., Oladimeji M., Olarenwaju S., <strong>Nasiru H.</strong> — Also presented at: The Role of Mathematical Science in Sustainable Development Goals (2020)</div>
+      </div>
+    </div>
+    <div class="pub-item reveal">
+      <div class="pub-num">02</div>
+      <div>
+        <div class="pub-title">Knowledge and Attitude of Female Genital Mutilation Among Mothers Living in Afao Community, Ekiti State</div>
+        <div class="pub-journal">Journal of Advanced Education and Sciences · 2022; 2(4): 116–123</div>
+        <div class="pub-authors">Akinola F., Ogunlade T., <strong>Nasiru H.</strong>, Nasiru M.</div>
+      </div>
+    </div>
+    <div class="pub-item reveal">
+      <div class="pub-num">03</div>
+      <div>
+        <div class="pub-title">Perception and Practice of Injection Safety Among Nurses in Federal Teaching Hospital, Ido-Ekiti</div>
+        <div class="pub-journal">Journal of Advanced Education and Sciences · 2023; 3(1): 82–88</div>
+        <div class="pub-authors">Osundare I., Akinola F., <strong>Nasiru H.</strong>, Jonathan F.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-tag" data-num="05">Portfolio</div>
+    <h2 class="section-title">Data Projects</h2>
+    <p class="section-lead">Hands-on projects being built as I advance through SQL and data engineering — watch this space grow.</p>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-top">
+        <span class="project-icon">🗄️</span>
+        <span class="project-status status-progress">In Progress</span>
+      </div>
+      <div class="project-title">Sales Data Analysis with SQL</div>
+      <div class="project-desc">Querying and analysing a retail sales database to uncover trends, top-performing products, and regional patterns using advanced SQL techniques.</div>
+      <div class="project-tags">
+        <span class="ptag">SQL</span><span class="ptag">PostgreSQL</span><span class="ptag">Data Analysis</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-top">
+        <span class="project-icon">📊</span>
+        <span class="project-status status-soon">Coming Soon</span>
+      </div>
+      <div class="project-title">Maternal Age & Pregnancy Outcome Model</div>
+      <div class="project-desc">Extending published research into an interactive data visualisation — applying the product binomial model to real hospital data.</div>
+      <div class="project-tags">
+        <span class="ptag">R</span><span class="ptag">Statistics</span><span class="ptag">Data Viz</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-top">
+        <span class="project-icon">📈</span>
+        <span class="project-status status-soon">Coming Soon</span>
+      </div>
+      <div class="project-title">Time Series Forecasting — Nigerian Economic Data</div>
+      <div class="project-desc">Applying time series analysis from MSc coursework to real Nigerian economic indicators using R and EViews.</div>
+      <div class="project-tags">
+        <span class="ptag">EViews</span><span class="ptag">R</span><span class="ptag">Time Series</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <div class="section-tag" data-num="06">Get In Touch</div>
+    <h2 class="section-title">Let's Work<br/>Together</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="reveal-left">
+      <p class="contact-intro">Whether it's a data project, research collaboration, consultancy, or just a conversation about statistics and data — I'd love to hear from you.</p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:habibkayode53@gmail.com">
+          <span class="contact-icon">✉️</span> habibkayode53@gmail.com
+        </a>
+        <a class="contact-link" href="tel:+2348143140315">
+          <span class="contact-icon">📞</span> +234 814 314 0315
+        </a>
+        <a class="contact-link" href="https://www.linkedin.com/in/habib-nasiru-a616351b7" target="_blank">
+          <span class="contact-icon">💼</span> LinkedIn — Habib Nasiru
+        </a>
+        <a class="contact-link" href="https://github.com/Nasiru-Habib" target="_blank">
+          <span class="contact-icon">🐙</span> GitHub — Nasiru-Habib
+        </a>
+      </div>
+    </div>
+    <div class="form-col reveal">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="John Doe" />
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="john@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell me about your project or opportunity..."></textarea>
+      </div>
+      <button class="btn-send" onclick="alert('Thanks for reaching out! Please email habibkayode53@gmail.com directly.')">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <span>Nasiru Habib Kayode</span> &nbsp;·&nbsp; Statistician &nbsp;·&nbsp; Data Analyst &nbsp;·&nbsp; Aspiring Data Engineer &nbsp;·&nbsp; Abuja, Nigeria</p>
+</footer>
+
+<script>
+// ── ANIMATED PARTICLE NETWORK ──
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [], mouse = { x: null, y: null };
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', () => { resize(); initParticles(); });
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.4;
+    this.r = Math.random() * 1.5 + 0.5;
+    this.alpha = Math.random() * 0.5 + 0.2;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > W) this.vx *= -1;
+    if (this.y < 0 || this.y > H) this.vy *= -1;
+    // mouse repel
+    if (mouse.x) {
+      const dx = this.x - mouse.x, dy = this.y - mouse.y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 120) {
+        this.x += (dx / d) * 1.5;
+        this.y += (dy / d) * 1.5;
+      }
+    }
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(100,255,218,${this.alpha})`;
+    ctx.fill();
+  }
+}
+
+function initParticles() {
+  const n = Math.floor((W * H) / 14000);
+  particles = Array.from({ length: n }, () => new Particle());
+}
+initParticles();
+
+function drawLines() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 130) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        const alpha = (1 - d / 130) * 0.15;
+        ctx.strokeStyle = `rgba(100,255,218,${alpha})`;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawLines();
+  requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener('mousemove', e => {
+  mouse.x = e.clientX; mouse.y = e.clientY;
+  const g = document.getElementById('cursor-glow');
+  g.style.left = e.clientX + 'px';
+  g.style.top = e.clientY + 'px';
+});
+window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal, .reveal-left');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => observer.observe(el));
+
+// Add initial visible for above-fold elements
+document.querySelectorAll('#hero .reveal').forEach((el, i) => {
+  setTimeout(() => el.classList.add('visible'), 200 + i * 150);
+});
+</script>
+</body>
+</html>
